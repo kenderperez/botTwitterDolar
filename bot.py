@@ -44,7 +44,7 @@ def principe():
     #hora actual
     hora = str(time.strftime("%H:%M")) #Formato de 24 horas
     fecha = str(time.strftime("%d/%m/%y"))
-    if hora == '12:55':
+    if hora == '13:05' or hora == '17:05':
       dolarOficial = getOficial('http://www.bcv.org.ve/tasas-informativas-sistema-bancario')
       dolarParalelo = getParalelo('https://s3.amazonaws.com/dolartoday/data.json')
       dolar = dolarParalelo['USD']
@@ -76,7 +76,7 @@ def principe():
       
      
       try:
-        api.update_status(f"Actualizacion 📊\n🗓 {fecha}\n🕓 {hora}\n💵 Dolartoday: Bs. {dolarTodayPretty} {statusToday}\n💰 Banco Central: Bs. {dolarBCVpretty} {statusBCV}")
+        api.update_status(f"Actualizacion 📊\n \n🗓 {fecha}\n🕓 {hora}\n💵 Dolartoday: Bs. {dolarTodayPretty} {statusToday}\n💰 Banco Central: Bs. {dolarBCVpretty} {statusBCV}\n")
         print('[+]Estado de Twitter Publicado  Satisfactoriamente')
       except tweepy.TweepError as error:
         if error.api_code == 187:
