@@ -22,7 +22,8 @@ auth.set_access_token("833044968977682433-wWbzZR42Gy8FdXjK3DmXL2c8RmDBOqc", "30n
 # Create API object
 api = tweepy.API(auth)
 
-historico = [234,590]
+historicoToday = [234,590]
+historicoBCV = [234,590]
 
 def getOficial(url):
 
@@ -43,21 +44,31 @@ def principe():
     #hora actual
     hora = str(time.strftime("%H:%M")) #Formato de 24 horas
     fecha = str(time.strftime("%d/%m/%y"))
-    if hora == '12:28':
+    if hora == '12:55':
       dolarOficial = getOficial('http://www.bcv.org.ve/tasas-informativas-sistema-bancario')
       dolarParalelo = getParalelo('https://s3.amazonaws.com/dolartoday/data.json')
       dolar = dolarParalelo['USD']
-      dolarBCV = int(dolar['sicad2'])
-      dolarToday = int(dolar['dolartoday'])
-      historico.append(dolarToday)
-      historico.pop(0)
-      status = ''
-      if historico[1] > historico[0]:
-            status = sube
-      elif historico[1] == historico[0]:
-            status = ''
+      dolarBCV = float(dolar['sicad2'])
+      dolarToday = float(dolar['dolartoday'])
+      historicoToday.append(dolarToday)
+      historicoToday.pop(0)
+      historicoBCV.append(dolarToday)
+      historicoBCV.pop(0)
+      statusBCV = ''
+      statusToday = ''
+      if historicoToday[1] > historicoToday[0]:
+            statusToday = sube
+      elif historicoToday[1] == historicoToday[0]:
+            statusToday = ''
       else:
-            status = baja
+            statusToday = baja
+      
+      if historicoBCV[1] > historicoBCV[0]:
+            statusBCV = sube
+      elif historicoToday[1] == historicoToday[0]:
+            statusBCV = ''
+      else:
+            statusBCV = baja
     
       dolarTodayPretty = "{:,}".format(dolarToday).replace(',','~').replace('.',',').replace('~','.')
       dolarBCVpretty = "{:,}".format(dolarBCV).replace(',','~').replace('.',',').replace('~','.')
@@ -65,7 +76,7 @@ def principe():
       
      
       try:
-        api.update_status(f"Actualizacion 📊\n🗓 {fecha}\n🕓 {hora}\n💵 {dolarTodayPretty} Bs {status}")
+        api.update_status(f"Actualizacion 📊\n🗓 {fecha}\n🕓 {hora}\n💵 Dolartoday: {dolarTodayPretty} {statusToday}\n💰 Banco Central: {dolarBCVpretty} {statusBCV}")
         print('[+]Estado de Twitter Publicado  Satisfactoriamente')
       except tweepy.TweepError as error:
         if error.api_code == 187:
