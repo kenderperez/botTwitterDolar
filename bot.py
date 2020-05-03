@@ -76,7 +76,7 @@ def principe():
       
      
       try:
-        api.update_status(f"Actualizacion 📊\n🗓 {fecha}\n🕓 {hora}\n💵 Dolartoday: {dolarTodayPretty} {statusToday}\n💰 Banco Central: {dolarBCVpretty} {statusBCV}")
+        api.update_status(f"Actualizacion 📊\n🗓 {fecha}\n🕓 {hora}\n💵 Dolartoday: Bs. {dolarTodayPretty} {statusToday}\n💰 Banco Central: Bs. {dolarBCVpretty} {statusBCV}")
         print('[+]Estado de Twitter Publicado  Satisfactoriamente')
       except tweepy.TweepError as error:
         if error.api_code == 187:
