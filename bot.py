@@ -52,10 +52,11 @@ def principe():
       dolarToday = float(dolar['dolartoday'])
       historicoToday.append(dolarToday)
       historicoToday.pop(0)
-      historicoBCV.append(dolarToday)
+      historicoBCV.append(dolarBCV)
       historicoBCV.pop(0)
       statusBCV = ''
       statusToday = ''
+      print(historicoToday, historicoBCV)
       if historicoToday[1] > historicoToday[0]:
             statusToday = sube
       elif historicoToday[1] == historicoToday[0]:
